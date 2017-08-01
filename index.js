@@ -182,15 +182,15 @@ function updateAirtable(domains, callback) {
 			console.log(err);
 		}
 
-		callback(null, domains);
+		callback(null);
 	});
 }
 
-function publishSite(website, callback) {
+function publishSite(callback) {
 	console.log("Publishing site.");
 
-	axios.post(process.env.NETLIFY_DEPLOY_HOOK).then((res) => {
-		callback(null, "Published.");
+	axios.post(process.env.URBAN_NETLIFY_DEPLOY_HOOK).then((res) => {
+		callback(null);
 	}).catch((err) => {
 		callback(err);
 	});
@@ -201,7 +201,6 @@ async.waterfall([
 	scrapeDictionary,
 	mergeRecords,
 	checkDomains,
-	// setIds,
 	updateAirtable,
 	publishSite
 ], function (err, words) {
