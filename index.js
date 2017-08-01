@@ -16,6 +16,7 @@ Airtable.configure({
 	apiKey: process.env.AIRTABLE_API_KEY
 });
 var base = Airtable.base(process.env.AIRTABLE_BASE_ID);
+var axios = require('axios');
 
 function getAirtableRecords(callback) {
 	var records = [];
@@ -185,13 +186,24 @@ function updateAirtable(domains, callback) {
 	});
 }
 
+function publishSite(website, callback) {
+	console.log("Publishing site.");
+
+	axios.post(process.env.NETLIFY_DEPLOY_HOOK).then((res) => {
+		callback(null, "Published.");
+	}).catch((err) => {
+		callback(err);
+	});
+}
+
 async.waterfall([
 	getAirtableRecords,
 	scrapeDictionary,
 	mergeRecords,
 	checkDomains,
 	// setIds,
-	updateAirtable
+	updateAirtable,
+	publishSite
 ], function (err, words) {
 	if (err) {
 		console.log(`Something went wrong: ${err}`);
