@@ -48,6 +48,7 @@ function getAirtableRecords(callback) {
 function scrapeDictionary(records, callback) {
 	x('http://www.urbandictionary.com/', '.def-panel', [{
 			title: '.word',
+			word: '.word',
 			meaning: '.meaning',
 			example: '.example'
 		}])
@@ -149,6 +150,7 @@ function updateAirtable(domains, callback) {
 			// New record
 			base('Domains').create({
 				'title': domain.title,
+				'word': domain.word,
 				'meaning': domain.meaning,
 				'example': domain.example,
 				'available': domain.available,
