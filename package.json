@@ -1,21 +1,22 @@
 {
-  "name": "urban-cron",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "scrape": "node index.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "airtable": "^0.5.0",
-    "async": "^2.5.0",
-    "axios": "^0.16.2",
-    "domainr-api": "^1.2.1",
-    "dotenv": "^4.0.0",
-    "hashids": "^1.1.1",
-    "moment": "^2.18.1",
-    "x-ray": "^2.3.2"
-  }
+	"name": "urban-cron",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"scrape": "node index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"airtable": "^0.5.0",
+		"async": "^2.5.0",
+		"axios": "^0.16.2",
+		"domainr-api": "^1.2.1",
+		"dotenv": "^4.0.0",
+		"hashids": "^1.1.1",
+		"json2csv": "^3.11.1",
+		"moment": "^2.18.1",
+		"x-ray": "^2.3.2"
+	}
 }
