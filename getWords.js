@@ -28,14 +28,14 @@ function getAirtableRecords(callback) {
 		fetchNextPage();
 	}, function done(err) {
 		if (err) {
-			return callback(`Something went wrong getting records: ${err}`));
+			return callback(err);
 		}
 
 		return callback(null, records);
 	});
 }
 
-function scrapeDictionary(callback) {
+function scrapeDictionary(records, callback) {
 	var domains = [];
 
 	x('http://www.urbandictionary.com/', '.def-panel', [{
@@ -57,8 +57,26 @@ function scrapeDictionary(callback) {
 				domains[i].available = 'is taken';
 			}
 
-			callback(null, domains);
+			callback(null, records, domains);
 		});
+}
+
+function mergeRecords(records, domains, callback) {
+	domains.forEach(function (domain) {
+		var found = records.find(function (record) {
+			return domain.title == record.title;
+		});
+		if (found == undefined) {
+			console.log("New domain: " + domain.title);
+			records.push(domain);
+		}
+	});
+
+	records.map(function(record) {
+		record.count = records.length;
+	})
+
+	callback(null, records);
 }
 
 function writeToFile(words, callback) {
@@ -76,7 +94,9 @@ function writeToFile(words, callback) {
 }
 
 async.waterfall([
+	getAirtableRecords,
 	scrapeDictionary,
+	mergeRecrds,
 	writeToFile
 ], function (err, words) {
 	if (err) {
