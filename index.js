@@ -17,8 +17,6 @@ Airtable.configure({
 });
 var base = Airtable.base(process.env.AIRTABLE_BASE_ID);
 var axios = require('axios');
-var CronJob = require('cron').CronJob;
-
 
 function getAirtableRecords(callback) {
 	var records = [];
@@ -82,7 +80,7 @@ function mergeRecords(records, domains, callback) {
 		}
 	});
 
-	records.map(function(record) {
+	records.map(function (record) {
 		record.count = records.length;
 	})
 
@@ -200,17 +198,15 @@ function publishSite(callback) {
 	});
 }
 
-new CronJob('*00 30 08 * * 1', function() {
-	async.waterfall([
-		getAirtableRecords,
-		scrapeDictionary,
-		mergeRecords,
-		checkDomains,
-		updateAirtable,
-		publishSite
-	], function (err, words) {
-		if (err) {
-			console.log(`Something went wrong: ${err}`);
-		}
-	});
-}, null, true, 'Australia/Sydney');
+async.waterfall([
+	getAirtableRecords,
+	scrapeDictionary,
+	mergeRecords,
+	checkDomains,
+	updateAirtable,
+	publishSite
+], function (err, words) {
+	if (err) {
+		console.log(`Something went wrong: ${err}`);
+	}
+});

@@ -71,10 +71,10 @@ function scrapeDictionary(records, callback) {
 }
 
 function mergeRecords(records, domains, callback) {
-	records.forEach(function(record) {
+	records.forEach(function (record) {
 		// Find matching domain
-		domains.forEach(function(domain){
-			if(record.title == domain.title){
+		domains.forEach(function (domain) {
+			if (record.title == domain.title) {
 				console.log("Merging record: " + record.title);
 				record.word = domain.word;
 			}
@@ -100,14 +100,16 @@ function writeToFile(records, callback) {
 }
 
 function updateAirtableRecords(records, callback) {
-	async.each(records, function(record, eachCallback){
+	async.each(records, function (record, eachCallback) {
 		base('Domains').update(record.recordId, {
 			"word": record.word
-		}, function(err, record) {
-				if (err) { return eachCallback(err); }
-				eachCallback();
+		}, function (err, record) {
+			if (err) {
+				return eachCallback(err);
+			}
+			eachCallback();
 		});
-	}, function(err) {
+	}, function (err) {
 		if (err) {
 			return callback(err);
 		}

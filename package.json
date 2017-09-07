@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node index.js"
+		"scrape": "node index.js"
 	},
 	"author": "",
 	"license": "ISC",
@@ -12,7 +12,6 @@
 		"airtable": "^0.5.0",
 		"async": "^2.5.0",
 		"axios": "^0.16.2",
-		"cron": "^1.2.1",
 		"domainr-api": "^1.2.1",
 		"dotenv": "^4.0.0",
 		"hashids": "^1.1.1",
