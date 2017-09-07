@@ -80,7 +80,7 @@ function mergeRecords(records, domains, callback) {
 		}
 	});
 
-	records.map(function(record) {
+	records.map(function (record) {
 		record.count = records.length;
 	})
 
