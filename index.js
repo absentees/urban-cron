@@ -200,6 +200,7 @@ function publishSite(callback) {
 }
 
 // Grab new words once a week
+console.log("Grab new words once per week...");
 new CronJob('*00 30 08 * * 1', function() {
 	async.waterfall([
 		getAirtableRecords,
