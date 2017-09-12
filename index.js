@@ -17,6 +17,7 @@ Airtable.configure({
 });
 var base = Airtable.base(process.env.AIRTABLE_BASE_ID);
 var axios = require('axios');
+var CronJob = require('cron').CronJob;
 
 function getAirtableRecords(callback) {
 	var records = [];
@@ -198,15 +199,18 @@ function publishSite(callback) {
 	});
 }
 
-async.waterfall([
-	getAirtableRecords,
-	scrapeDictionary,
-	mergeRecords,
-	checkDomains,
-	updateAirtable,
-	publishSite
-], function (err, words) {
-	if (err) {
-		console.log(`Something went wrong: ${err}`);
-	}
-});
+// Grab new words once a week
+new CronJob('*00 30 08 * * 1', function() {
+	async.waterfall([
+		getAirtableRecords,
+		scrapeDictionary,
+		mergeRecords,
+		checkDomains,
+		updateAirtable,
+		publishSite
+	], function (err, words) {
+		if (err) {
+			console.log(`Something went wrong: ${err}`);
+		}
+	});
+}, null, true, 'Australia/Sydney');
