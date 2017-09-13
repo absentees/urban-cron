@@ -200,8 +200,7 @@ function publishSite(callback) {
 }
 
 // Grab new words once a week
-console.log("Grab new words once per week...");
-new CronJob('*00 30 08 * * 1', function() {
+var cronJob = new CronJob('00 30 08 * * 1', function() {
 	async.waterfall([
 		getAirtableRecords,
 		scrapeDictionary,
@@ -215,3 +214,5 @@ new CronJob('*00 30 08 * * 1', function() {
 		}
 	});
 }, null, true, 'Australia/Sydney');
+
+console.log("Job is: " + cronJob.running + " – Grab new words once per week...");
